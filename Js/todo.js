@@ -9,6 +9,7 @@ let timeSetM = now.getMinutes();
 let timeSet = `${timeSetH}:${timeSetM}`
 
 timeInput.value = timeSet
+
 const TODOS_LS = 'toDos'; // 지역저장소에 저장될 value에 대응하는 key값을 설정 
 let toDos = [
 
@@ -55,67 +56,60 @@ function setToDos() {
 
 function paintToDo(text, TimeInput) {
     // todoInput 값이 없을때 
-    if (toDoInput.value == "") {
+
+
+
+    if (toDos.length < 4) {
+
+        const bigDiv = document.createElement('div');
+        bigDiv.classList.add('addtodo');
+        const div1 = document.createElement('div');
+        div1.classList.add('num_time');
+
+
+        const h4 = document.createElement('h4');
+        const p = document.createElement('p');
+        const span = document.createElement('span');
+        const newId = toDos.length + 1;
+
+
+
+        h4.innerText = `${newId}.`;
+        span.innerText = text;
+        p.innerText = TimeInput;
+        // bigDiv.addEventListener("click", deleteToDo); // delBtn에 클릭이벤트에 deleteToDo함수 연결
+        toDoList.appendChild(bigDiv);
+        bigDiv.appendChild(div1)
+        div1.appendChild(h4);
+        div1.appendChild(p);
+        bigDiv.appendChild(span);
+
+        // 결국에는 찾았다 여기가 문제였다 이말이야!!!
+        const toDoObj = {
+            text,
+            id: newId,
+            time: TimeInput,
+        };
+
+        toDos.push(toDoObj); // toDos에 toDoList 삽입
+        saveToDos(); // localStorage에 저장하는 함수
+        // 이게 로컬스토리지에 저장되어있으니 리로딩하면 재반복한다
+
+        $modalBg[0].style.display = "none";
+        document.body.style.overflow = "unset";
+
+        // 일정과 시간을 넣지 않을경우
+
 
     }
-    else if (toDoInput.value.length >= 2) {
-        if (toDos.length < 4) {
+    else {
+        console.log('4개이상이네')
 
-            const bigDiv = document.createElement('div');
-            bigDiv.classList.add('addtodo');
-            const div1 = document.createElement('div');
-            div1.classList.add('num_time');
-
-
-            const h4 = document.createElement('h4');
-            const p = document.createElement('p');
-            const span = document.createElement('span');
-            const newId = toDos.length + 1;
-
-
-
-            h4.innerText = `${newId}.`;
-            span.innerText = text;
-            p.innerText = TimeInput;
-            // bigDiv.addEventListener("click", deleteToDo); // delBtn에 클릭이벤트에 deleteToDo함수 연결
-            toDoList.appendChild(bigDiv);
-            bigDiv.appendChild(div1)
-            div1.appendChild(h4);
-            div1.appendChild(p);
-            bigDiv.appendChild(span);
-
-            // 결국에는 찾았다 여기가 문제였다 이말이야!!!
-            const toDoObj = {
-                text,
-                id: newId,
-                time: TimeInput,
-            };
-
-            toDos.push(toDoObj); // toDos에 toDoList 삽입
-            saveToDos(); // localStorage에 저장하는 함수
-            // 이게 로컬스토리지에 저장되어있으니 리로딩하면 재반복한다
-
-            $modalBg[0].style.display = "none";
-            document.body.style.overflow = "unset";
-
-            // 일정과 시간을 넣지 않을경우
-
-
-        }
-        else {
-            // alert('일정은 4개까지만 추가 가능합니다')
-
-        }
-        // 이걸 let 반복문으로 반복해버리기 해버ㅗ지 
     }
 
-    // 로컬스테이지 저장된 갯수가 4개 미만일 경우 그리고
+} //esle if 부분 input값이 2글자 이상이어만 작동
 
-
-
-
-
-}
+//pain 함수 끝
 
 
 function handleSubmit(event) {
@@ -132,11 +126,13 @@ function handleSubmit(event) {
 
 function loadToDos() { // 지역저장소에 저장된 key값의 value를 불러오는 function 
     const loadedToDos = localStorage.getItem(TODOS_LS);
+    console.log(loadToDos)
     // localStorage에 TODOS_Ls가 있는지 확인
-    // 로컬스토리지에 값이 있을경우! 
 
+    // 로컬스토리지에 값이 있을경우! 
     if (loadedToDos !== null) {
         const parsedToDos = JSON.parse(loadedToDos); // loadedToDos를 json객체로 변경
+        console.log(parsedToDos)
         parsedToDos.forEach(function (toDo) { // 객체 내용 한개씩 파라미터로 넣어서 함수 실행
             // 결국에는 찾았다 여기가 문제였다 이말이야!!!
             paintToDo(toDo.text, toDo.time); // 리스트 추가하는 함수
@@ -157,6 +153,13 @@ function init() {
 }
 
 init();
+
+
+
+
+
+
+
 
 
 
