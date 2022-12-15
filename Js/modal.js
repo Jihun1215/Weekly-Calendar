@@ -78,7 +78,7 @@ else {
             }
             이름.push(userobj);
             saveName();
-            userNameSave.innerText = 유저이름;
+            userNameSave.innerText =`${유저이름}님👻`;
             alert('이름이 추가되었습니다');
             $modalBg[1].style.display = "none";
             document.body.style.overflow = "unset";
