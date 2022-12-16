@@ -426,7 +426,7 @@ main .todolist div {
 /* user 모달 */
 #userNameInput {
 
-    width: 230px;
+    width: 150px;
     height: 32px;
     font-size: 15px;
     border: 0;
